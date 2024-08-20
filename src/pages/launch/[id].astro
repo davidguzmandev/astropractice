@@ -1,0 +1,24 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getLaunchBy } from "../../services/spacex"
+
+const {id} = Astro.params 
+
+let launch
+if (id){ // Solo para el servidor
+   launch = await getLaunchBy({id})
+}
+
+export function getStaticPaths() {
+  return [
+    { params: { id: '1' } },
+    { params: { id: '2' } },
+    { params: { id: '3' } }
+  ];
+}
+---
+<Layout title="Launch">
+    <article>
+        {launch?.id}
+    </article>
+</Layout>

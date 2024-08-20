@@ -1,4 +1,5 @@
 ---
+import { pathHasLocale } from "astro:i18n";
 import Layout from "../../layouts/Layout.astro";
 import { getLaunchBy } from "../../services/spacex"
 
@@ -9,16 +10,11 @@ if (id){ // Solo para el servidor
    launch = await getLaunchBy({id})
 }
 
-export function getStaticPaths() {
-  return [
-    { params: { id: '1' } },
-    { params: { id: '2' } },
-    { params: { id: '3' } }
-  ];
-}
 ---
-<Layout title="Launch">
-    <article>
-        {launch?.id}
+<Layout title={`Launch ${id}`}>
+    <article class="flex flex-col gap-y-4" >
+      <img class="w-52 h-auto" src={launch?.links?.patch.small} alt={launch?.name}>
+      <h2 class="text-4xl text-white font-bold">Launch #{launch?.flight_number}</h2>
+        <p class="text-lg">{launch?.details}</p>
     </article>
 </Layout>
